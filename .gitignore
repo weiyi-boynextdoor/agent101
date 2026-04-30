@@ -69,3 +69,5 @@ ENV/
 Thumbs.db
 
 .vscode/
+
+.env
