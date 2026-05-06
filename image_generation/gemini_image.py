@@ -1,8 +1,8 @@
+# https://ai.google.dev/gemini-api/docs/image-generation?hl=zh-cn#python
 from google import genai
 from PIL import Image
 from dotenv import load_dotenv
 
-# use environment variable GEMINI_API_KEY
 load_dotenv("../.env")
 
 client = genai.Client()

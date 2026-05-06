@@ -1,0 +1,44 @@
+from pathlib import Path
+
+from dotenv import load_dotenv
+from google import genai
+from PIL import Image
+
+
+BASE_DIR = Path(__file__).resolve().parent
+INPUT_DIR = BASE_DIR / "inputs"
+OUTPUT_DIR = BASE_DIR / "outputs"
+OUTPUT_PATH = OUTPUT_DIR / "multi_view.png"
+MODEL = "gemini-3-pro-image-preview"
+
+
+load_dotenv(BASE_DIR.parent / ".env")
+
+client = genai.Client()
+
+prompt = """
+Create one clean reference image from all input images.
+For each input image, remove its original background and keep only the main subject.
+Place every extracted subject as a separate sub-image on the same canvas.
+Keep clear spacing between sub-images; do not blend, merge, overlap, or transform them into one object.
+Preserve each subject's original appearance, proportions, colors, texture, labels, and visible details.
+Use a simple light neutral background, even lighting, and no extra objects or decorative elements.
+The result will be used as a video generation reference, so prioritize clarity, separation, and consistency.
+"""
+
+images = [Image.open(INPUT_DIR / f"lebron{i}.jpg") for i in range(1, 7)]
+
+response = client.models.generate_content(
+    model=MODEL,
+    contents=[prompt, *images],
+)
+
+OUTPUT_DIR.mkdir(exist_ok=True)
+
+for part in response.parts:
+    if part.text is not None:
+        print(part.text)
+    elif part.inline_data is not None:
+        image = part.as_image()
+        image.save(OUTPUT_PATH)
+        print(f"Saved: {OUTPUT_PATH}")
