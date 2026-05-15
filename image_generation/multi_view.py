@@ -4,15 +4,9 @@ from dotenv import load_dotenv
 from google import genai
 from PIL import Image
 
-
-BASE_DIR = Path(__file__).resolve().parent
-INPUT_DIR = BASE_DIR / "inputs"
-OUTPUT_DIR = BASE_DIR / "outputs"
-OUTPUT_PATH = OUTPUT_DIR / "multi_view.png"
 MODEL = "gemini-3-pro-image-preview"
 
-
-load_dotenv(BASE_DIR.parent / ".env")
+load_dotenv("../.env")
 
 client = genai.Client()
 
@@ -26,19 +20,17 @@ Use a simple light neutral background, even lighting, and no extra objects or de
 The result will be used as a video generation reference, so prioritize clarity, separation, and consistency.
 """
 
-images = [Image.open(INPUT_DIR / f"lebron{i}.jpg") for i in range(1, 7)]
+images = [Image.open(f"../res/lebron{i}.jpg") for i in range(1, 7)]
 
 response = client.models.generate_content(
     model=MODEL,
     contents=[prompt, *images],
 )
 
-OUTPUT_DIR.mkdir(exist_ok=True)
-
 for part in response.parts:
     if part.text is not None:
         print(part.text)
     elif part.inline_data is not None:
         image = part.as_image()
-        image.save(OUTPUT_PATH)
-        print(f"Saved: {OUTPUT_PATH}")
+        image.save("./multiview.jpg")
+        print(f"Saved: ./multiview.jpg")

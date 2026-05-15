@@ -12,7 +12,7 @@ prompt = (
     "fancy restaurant under the Gemini constellation",
 )
 
-image = Image.open("./inputs/xunrou.jpg")
+image = Image.open("../res/xunrou.jpg")
 print(image.size)
 
 response = client.models.generate_content(
