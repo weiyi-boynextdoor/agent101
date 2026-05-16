@@ -3,7 +3,7 @@ from google import genai
 from PIL import Image
 from dotenv import load_dotenv
 
-load_dotenv("../.env")
+load_dotenv()
 
 client = genai.Client()
 
@@ -12,7 +12,7 @@ prompt = (
     "fancy restaurant under the Gemini constellation",
 )
 
-image = Image.open("../res/xunrou.jpg")
+image = Image.open("./res/xunrou.jpg")
 print(image.size)
 
 response = client.models.generate_content(

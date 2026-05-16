@@ -2,7 +2,7 @@ from google import genai
 from dotenv import load_dotenv
 
 # use environment variable GEMINI_API_KEY
-load_dotenv("../.env")
+load_dotenv()
 
 client = genai.Client()
 

@@ -6,7 +6,7 @@ from PIL import Image
 
 MODEL = "gemini-3-pro-image-preview"
 
-load_dotenv("../.env")
+load_dotenv()
 
 client = genai.Client()
 
@@ -20,7 +20,7 @@ Use a simple light neutral background, even lighting, and no extra objects or de
 The result will be used as a video generation reference, so prioritize clarity, separation, and consistency.
 """
 
-images = [Image.open(f"../res/lebron{i}.jpg") for i in range(1, 7)]
+images = [Image.open(f"./res/lebron{i}.jpg") for i in range(1, 7)]
 
 response = client.models.generate_content(
     model=MODEL,

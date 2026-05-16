@@ -5,7 +5,7 @@ from google import genai
 from google.genai.types import GenerateVideosSource, GenerateVideosConfig
 from dotenv import load_dotenv
 
-load_dotenv("../.env")
+load_dotenv()
 
 client = genai.Client()
 

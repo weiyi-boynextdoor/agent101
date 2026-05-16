@@ -2,7 +2,7 @@ from openai import OpenAI
 from dotenv import load_dotenv
 
 # use environment variable OPENAI_API_KEY
-load_dotenv("../.env")
+load_dotenv()
 
 client = OpenAI()
 
